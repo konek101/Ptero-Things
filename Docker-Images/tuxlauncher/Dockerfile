@@ -19,7 +19,7 @@ RUN     dpkg --add-architecture i386 \
 
 
 RUN set -x -e; \
-    entrypoint wineboot --init; \
+    wineboot --init; \
     while true; do \
       if timeout 30m winetricks --unattended --force cmd dotnet20 dotnet472 corefonts; then \
         break; \
