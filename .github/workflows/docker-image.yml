@@ -25,7 +25,7 @@ jobs:
     - name: Build and Push image
       uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
       with:
-        context: ./Docker-Images/tuxlauncher
-        file: .Docker-Images/tuxlauncher/Dockerfile
+        context: .
+        file: ./Docker-Images/tuxlauncher/Dockerfile
         push: true
         tags: ghcr.io/pteroeggs/astrotux:latest
