@@ -37,7 +37,7 @@ WORKDIR /home/container
 
 # Run Wine and Winetricks as the non-root user
 RUN WINEARCH=win32 WINEPREFIX=/home/container/.wine wineboot --init && \
-    WINEPREFIX=/home/container/.wine winetricks -q dotnet47
+    WINEPREFIX=/home/container/.wine winetricks -q dotnet471
 
 STOPSIGNAL SIGINT
 COPY --chown=container:container ./entrypoint.sh /entrypoint.sh
