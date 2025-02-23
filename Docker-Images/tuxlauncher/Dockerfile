@@ -19,6 +19,8 @@ RUN     dpkg --add-architecture i386 \
 
 
 RUN set -x -e; \
+    mkdir wino; \
+    cd wino; \
     wineboot --init; \
     winetricks --unattended --force cmd dotnet20 dotnet472 corefonts;
 
