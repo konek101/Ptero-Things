@@ -20,13 +20,7 @@ RUN     dpkg --add-architecture i386 \
 
 RUN set -x -e; \
     wineboot --init; \
-    while true; do \
-      if timeout 30m winetricks --unattended --force cmd dotnet20 dotnet472 corefonts; then \
-        break; \
-      fi \
-    done; \
-    while pgrep wineserver >/dev/null; do echo "Waiting for wineserver"; sleep 1; done; \
-    rm -rf $HOME/.cache/winetricks;
+    winetricks --unattended --force cmd dotnet20 dotnet472 corefonts;
 
 # Set environment variables
 ENV USER=container \
