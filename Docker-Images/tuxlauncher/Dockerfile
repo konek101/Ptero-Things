@@ -28,9 +28,8 @@ ENV USER=container \
         WINEDLLOVERRIDES="mscoree,mshtml=" \
         AUTO_UPDATE=1
 
-# Create a non-root user and set permissions
-RUN useradd -m -d /home/container -s /bin/bash container && \
-    chown -R container:container /home/container
+# Ensure the existing user has correct ownership
+RUN chown -R container:container /home/container
 
 # Switch to non-root user
 USER container
