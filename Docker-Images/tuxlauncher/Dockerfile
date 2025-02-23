@@ -28,15 +28,17 @@ ENV USER=container \
         WINEDLLOVERRIDES="mscoree,mshtml=" \
         AUTO_UPDATE=1
 
-# Ensure correct ownership
-RUN mkdir -p /home/container && chown -R root:root /home/container
+# Create a non-root user and set permissions
+RUN useradd -m -d /home/container -s /bin/bash container && \
+    chown -R container:container /home/container
 
-# Set working directory
+# Switch to non-root user
+USER container
 WORKDIR /home/container
 
-# Run Wine setup as root
-RUN WINEARCH=win32 WINEPREFIX=/home/container/.wine wineboot --init || true
-RUN WINEPREFIX=/home/container/.wine winetricks -q dotnet47 || true
+# Run Wine and Winetricks as the non-root user
+RUN WINEARCH=win32 WINEPREFIX=/home/container/.wine wineboot --init && \
+    WINEPREFIX=/home/container/.wine winetricks -q dotnet47
 
 STOPSIGNAL SIGINT
 COPY --chown=container:container ./entrypoint.sh /entrypoint.sh
