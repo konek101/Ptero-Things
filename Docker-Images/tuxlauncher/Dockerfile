@@ -17,6 +17,17 @@ RUN     dpkg --add-architecture i386 \
                 && apt install -y --no-install-recommends numactl libntlm0 winbind xauth libncurses5:i386 libncurses6:i386 libsdl2-2.0-0:i386 jq libgnutls30 \
                 && apt install --install-recommends --fix-missing winehq-devel cabextract wine-binfmt -y
 
+
+RUN set -x -e; \
+    entrypoint wineboot --init; \
+    while true; do \
+      if timeout 30m winetricks --unattended --force cmd dotnet20 dotnet472 corefonts; then \
+        break; \
+      fi \
+    done; \
+    while pgrep wineserver >/dev/null; do echo "Waiting for wineserver"; sleep 1; done; \
+    rm -rf $HOME/.cache/winetricks;
+
 # Set environment variables
 ENV USER=container \
         HOME=/home/container \
