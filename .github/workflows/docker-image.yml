@@ -27,4 +27,4 @@ jobs:
       with:
         context: /Docker-Images/tuxlauncher
         push: true
-        tags: ghcr.io/Pteroeggs/Astrotux:latest
+        tags: ghcr.io/pteroeggs/astrotux:latest
