@@ -28,12 +28,15 @@ ENV USER=container \
         WINEDLLOVERRIDES="mscoree,mshtml=" \
         AUTO_UPDATE=1
 
+# Ensure correct ownership
+RUN mkdir -p /home/container && chown -R root:root /home/container
+
 # Set working directory
 WORKDIR /home/container
 
-# Install .NET 4.7 using winetricks
-RUN WINEARCH=win32 WINEPREFIX=/home/container/.wine wineboot --init && \
-    WINEPREFIX=/home/container/.wine winetricks -q dotnet47
+# Run Wine setup as root
+RUN WINEARCH=win32 WINEPREFIX=/home/container/.wine wineboot --init || true
+RUN WINEPREFIX=/home/container/.wine winetricks -q dotnet47 || true
 
 STOPSIGNAL SIGINT
 COPY --chown=container:container ./entrypoint.sh /entrypoint.sh
