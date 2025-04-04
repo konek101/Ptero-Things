@@ -2,7 +2,6 @@
 # Docker Image for AstroTuxLauncher on Pterodactyl #
 # ------------------------------------------------ #
 FROM    ghcr.io/parkervcp/yolks:debian
-LABEL   author="Kringle" maintainer="imkringle@proton.me"
 # Cred to https://github.com/Dalethium for helping cleanup
 ENV     DEBIAN_FRONTEND=noninteractive
 
